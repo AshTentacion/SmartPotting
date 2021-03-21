@@ -1,0 +1,32 @@
+spring:
+  datasource: # 配置数据源
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/mydb?useUnicode=true&useJDBCCompliantTimezoneShift=true&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+  
+  mqtt:
+    username: admin
+    password: admin123
+    url: tcp://8.129.17.77:1883
+    client:
+      id: 123
+    topic: plant_data, topic_default
+    completionTimeout: 3000
+  
+
+server:
+  port: 8080  # 配置端口
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.demo.domain
+  configuration:
+    map-underscore-to-camel-case: true
+

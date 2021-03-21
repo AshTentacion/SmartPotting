@@ -1,0 +1,28 @@
+.main-background{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("../images/background.jpg") no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.main{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 300px;
+    /*background: url("https://i0.hippopx.com/photos/320/918/427/sky-clouds-sunlight-dark-preview.jpg") no-repeat;*/
+    margin-left: -250px;
+    margin-top: -150px;
+    background: #fff;
+}
+
+.center{
+    margin: 0 auto;
+}
+
+.main-form-item{
+    margin: 0 auto;
+}

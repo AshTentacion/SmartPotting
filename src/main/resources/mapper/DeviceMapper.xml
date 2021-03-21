@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.Device">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="device_id" jdbcType="CHAR" property="deviceId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, device_id, name, type, user_id
+  </sql>
+
+  <select id="selectCountByDeviceIdUserId" resultType="java.lang.Integer">
+    select count(*)
+    from device
+    where device_id = #{device_id,jdbcType=VARCHAR}
+    and
+    user_id = #{user_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where user_id = #{user_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.domain.Device">
+    insert into device (id, device_id, name, 
+      type, user_id)
+    values (#{id,jdbcType=INTEGER}, #{deviceId,jdbcType=CHAR}, #{name,jdbcType=CHAR}, 
+      #{type,jdbcType=TINYINT}, #{userId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.domain.Device">
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.Device">
+    update device
+    <set>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.Device">
+    update device
+    set device_id = #{deviceId,jdbcType=CHAR},
+      name = #{name,jdbcType=CHAR},
+      type = #{type,jdbcType=TINYINT},
+      user_id = #{userId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

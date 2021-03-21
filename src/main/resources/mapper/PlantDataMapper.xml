@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PlantDataMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.domain.PlantData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="temperature" jdbcType="REAL" property="temperature" />
+    <result column="humidity" jdbcType="REAL" property="humidity" />
+    <result column="pressure" jdbcType="REAL" property="pressure" />
+    <result column="illumination" jdbcType="REAL" property="illumination" />
+    <result column="water_level" jdbcType="REAL" property="waterLevel" />
+    <result column="plant_status" jdbcType="BIT" property="plantStatus" />
+    <result column="threshold" jdbcType="INTEGER" property="threshold" />
+    <result column="device_id" jdbcType="CHAR" property="deviceId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, temperature, humidity, pressure, illumination, water_level, plant_status, threshold, 
+    device_id, create_time
+  </sql>
+
+  <select id="getAllByDeviceId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from plant_data
+    where device_id = #{device_id,jdbcType=VARCHAR}
+    order by create_time desc
+  </select>
+
+  <select id="isHasDevice" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from plant_data
+    where device_id = #{device_id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from plant_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from plant_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.domain.PlantData">
+    insert into plant_data (id, temperature, humidity, 
+      pressure, illumination, water_level, 
+      plant_status, threshold, device_id, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{temperature,jdbcType=REAL}, #{humidity,jdbcType=REAL}, 
+      #{pressure,jdbcType=REAL}, #{illumination,jdbcType=REAL}, #{waterLevel,jdbcType=REAL}, 
+      #{plantStatus,jdbcType=BIT}, #{threshold,jdbcType=INTEGER}, #{deviceId,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.domain.PlantData">
+    insert into plant_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="temperature != null">
+        temperature,
+      </if>
+      <if test="humidity != null">
+        humidity,
+      </if>
+      <if test="pressure != null">
+        pressure,
+      </if>
+      <if test="illumination != null">
+        illumination,
+      </if>
+      <if test="waterLevel != null">
+        water_level,
+      </if>
+      <if test="plantStatus != null">
+        plant_status,
+      </if>
+      <if test="threshold != null">
+        threshold,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="temperature != null">
+        #{temperature,jdbcType=REAL},
+      </if>
+      <if test="humidity != null">
+        #{humidity,jdbcType=REAL},
+      </if>
+      <if test="pressure != null">
+        #{pressure,jdbcType=REAL},
+      </if>
+      <if test="illumination != null">
+        #{illumination,jdbcType=REAL},
+      </if>
+      <if test="waterLevel != null">
+        #{waterLevel,jdbcType=REAL},
+      </if>
+      <if test="plantStatus != null">
+        #{plantStatus,jdbcType=BIT},
+      </if>
+      <if test="threshold != null">
+        #{threshold,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.domain.PlantData">
+    update plant_data
+    <set>
+      <if test="temperature != null">
+        temperature = #{temperature,jdbcType=REAL},
+      </if>
+      <if test="humidity != null">
+        humidity = #{humidity,jdbcType=REAL},
+      </if>
+      <if test="pressure != null">
+        pressure = #{pressure,jdbcType=REAL},
+      </if>
+      <if test="illumination != null">
+        illumination = #{illumination,jdbcType=REAL},
+      </if>
+      <if test="waterLevel != null">
+        water_level = #{waterLevel,jdbcType=REAL},
+      </if>
+      <if test="plantStatus != null">
+        plant_status = #{plantStatus,jdbcType=BIT},
+      </if>
+      <if test="threshold != null">
+        threshold = #{threshold,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.domain.PlantData">
+    update plant_data
+    set temperature = #{temperature,jdbcType=REAL},
+      humidity = #{humidity,jdbcType=REAL},
+      pressure = #{pressure,jdbcType=REAL},
+      illumination = #{illumination,jdbcType=REAL},
+      water_level = #{waterLevel,jdbcType=REAL},
+      plant_status = #{plantStatus,jdbcType=BIT},
+      threshold = #{threshold,jdbcType=INTEGER},
+      device_id = #{deviceId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
